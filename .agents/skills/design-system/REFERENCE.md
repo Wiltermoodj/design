@@ -1,3 +1,10 @@
+---
+title: .Agents - Skills - Design System - Reference
+type: document
+status: active
+description: Reference
+---
+
 # Design System Reference
 
 Full token tables, decision trees, and cross-ADR details.
@@ -117,7 +124,7 @@ Components consume ONLY Tier 2 tokens.
 **Modal backdrop:** `backdrop-filter: blur(4px)`; light `rgba(0,0,0,0.5)` / dark `rgba(0,0,0,0.7)`.
 **Layering rule:** Higher-elevation elements always cast larger shadows. Shadowless elements must not appear above shadowed elements.
 
-**Source:** [ADR 0041 - Elevation & Surface Tier System](../../knowledge/design/0041-surface-tier-system.md) — also defines `surface` prop (`raised`/`flat`/`flush`/`inset`) on `ContainerPanel` and `Card`.
+**Source:** [ADR 0041 - Elevation & Surface Tier System](../../../knowledge/design/0041-surface-tier-system.md) — also defines `surface` prop (`raised`/`flat`/`flush`/`inset`) on `ContainerPanel` and `Card`.
 
 ---
 

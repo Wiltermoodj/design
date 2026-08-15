@@ -1,4 +1,5 @@
 ---
+description: 
 title: "ADR 0041: Mobile Sticky Footer and FAB Architecture Standards"
 type: "adr"
 status: "active"

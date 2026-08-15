@@ -1,4 +1,7 @@
 ---
+title: Design Guidelines Skill
+type: skill
+status: active
 name: design-guidelines
 description: >
   Codebase-agnostic skill for applying design guidelines across any project.
