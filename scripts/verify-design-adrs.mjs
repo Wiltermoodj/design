@@ -3,7 +3,7 @@ import path from 'path';
 
 const WORKSPACE_ROOT = process.cwd();
 const DESIGN_DIR = path.join(WORKSPACE_ROOT, 'knowledge', 'design');
-const SKILL_MD = path.join(WORKSPACE_ROOT, '.agents', 'skills', 'design-system', 'SKILL.md');
+const SKILL_MD = path.join(WORKSPACE_ROOT, 'SKILL.md');
 const INDEX_MD = path.join(DESIGN_DIR, 'index.md');
 
 let errors = 0;

@@ -2,8 +2,7 @@
 title: Design Guidelines Reference
 type: reference
 status: active
-description: >
-last_updated: 2026-08-15
+description: Reference
 ---
 
 # Design Guidelines Reference
@@ -179,36 +178,53 @@ Every theme must define:
 | Input height | 36–40px; textarea min 80px |
 | Labels | Always above — never placeholder-only |
 | Validation trigger | Text inputs: on blur · Selects/toggles: on change |
-| Required indicator | beside label |
-| Field grouping | group related fields; separate groups clearly |
+| Error state | Red border + ✕ icon + message below |
+| Warning state | Amber + ⚠ icon + message below |
+| Success state | Green + ✓ icon + message below |
+| Required indicator | `*` in destructive color beside label |
+| Optional grouping | Label group "Optional." explicitly |
+| Field grouping | `<fieldset>` / `<legend>`; separated by `space-8` (32px) |
 | Multi-step | stepper showing current/total/completed |
 
 ---
 
 ## Data Visualization Rules
 
-- Chart palette: accessible colors with sufficient separation
-- Mandatory: title, labeled axes with units, legend when multi-series
-- Tooltips: hover/tap; show value + series + unit
-- Simplify on small screens
-- Every chart needs a tabular alternative for screen readers
+- Chart palette: 5–8 colors, ≥30° OKLCH hue separation, WCAG AA contrast
+- Mandatory: title, labeled axes with units, legend (multi-series), readable gridlines
+- Tooltips: hover desktop / tap mobile; show value + series + unit; follow cursor
+- Below `md`: simplify to key metrics or tabular summary; legend below chart; min height 200px
+- Every chart must have a tabular data alternative for screen readers
 
 ---
 
 ## Accessibility Checklist
 
 - [ ] WCAG 2.1 Level AA minimum
-- [ ] `:focus-visible` ring — never suppressed
+- [ ] `:focus-visible` 2px ring — never suppressed
 - [ ] Focus trapped inside modals; returned to trigger on close
 - [ ] Skip-navigation link on every page
-- [ ] One `<h1>` per page
-- [ ] Semantic landmarks (`<nav>`, `<main>`, `<aside>`) over generic divs where appropriate
+- [ ] One `<h1>` per page; no skipped heading levels
+- [ ] `<nav>`, `<main>`, `<aside>` over `<div>` where semantic
 - [ ] Status indicators use icon/text in addition to color
 - [ ] 44×44px minimum touch targets
 - [ ] `aria-hidden` on decorative images
 - [ ] `aria-label` on icon-only buttons
 - [ ] `aria-live` regions for dynamic updates
 - [ ] `prefers-reduced-motion`: instant state changes, opacity-only transitions
+
+---
+
+## Sidebar Specification
+
+| State | Width | Behavior |
+|---|---|---|
+| Collapsed | 64px | Icon-only |
+| Expanded | 240–280px | Label + icon |
+| Mobile | full-screen | Drawer overlay |
+
+- 5–9 top-level items max
+- Low-frequency actions (profile, settings, billing) → header profile menu
 
 ---
 
@@ -230,9 +246,29 @@ Every theme must define:
 
 ## Mobile Bottom Actions
 
-- Single app-wide action paradigm
-- 1–3 slot contract when a bottom action bar is used
-- Safe-area scroll buffer on page containers
+### Application Paradigm Evaluation Decision Tree
+```
+Evaluate App-Wide Action Needs:
+  ├─► Does app require 2–3 contextual actions per view on average?
+  │   (Search/Filter + Primary Action + Voice/AI Assistant)
+  │   └─► SELECT STICKY FOOTER PARADIGM (App-Wide)
+  │       • 1–3 slot layout flexibility per page
+  │       • Deprecate mobile floating FABs
+  │       • Safe-area inset + scroll buffer
+  │
+  └─► Does app require strictly 1 floating action across all views?
+      └─► SELECT FAB PARADIGM (App-Wide)
+          • Single persistent floating button
+          • Safe-area inset offset
+```
+
+### Sticky Footer Slot Contract (1–3 Slots)
+- **1-Slot**: Full-width primary CTA
+- **2-Slot**: Left: Context/Secondary action · Right: Primary CTA
+- **3-Slot**: Left: Search/Filter · Center: Primary CTA · Right: Assistant/Voice trigger
+
+### Mandatory Bottom Scroll Buffer Rule
+- Page container: `pb-[calc(var(--sticky-footer-height,4rem)+env(safe-area-inset-bottom,0px))] md:pb-0`
 
 ---
 

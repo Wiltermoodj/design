@@ -101,34 +101,35 @@ Read `REFERENCE.md` for full token tables, decision trees, and lookup references
 
 ## Key Rules (inline reference)
 
-| Domain | Rule |
-|---|---|
-| Casing | Code properties = camelCase; UI display = Title Case |
-| Layout | Defined structure; sidebar widths; z-index base→toast |
-| Spacing | Defined grid, tokens only, no ad-hoc values, content width caps |
-| Typography | Defined scale and weights; app UI capped at largest step |
-| Color | Semantic tokens only in components |
-| Icons | One library only; defined sizes; avatar immutable container |
-| Animation | No linear easing; duration budget; tooltip delay tiers; reduced-motion |
-| Transitions | Routes: fade; sections: slide; stagger limit |
-| Accessibility | WCAG 2.1 AA; focus rings; landmarks; touch targets |
-| Responsive | Mobile-first; breakpoints; component adaptation |
-| Forms | Labels above inputs; validation timing; grouping semantics |
-| Data Viz | Labeled axes+units+legend; accessible palette; tabular alt; responsive |
-| Theming | Complete token contract; minimum dark mode delta; override persistence |
-| Buttons | 1 primary per surface; destructive only in active confirm/hover; loading state |
-| Content Format | Relative time threshold; currency format; unknowns = em-dash |
-| Copy | Verb-first labels; error = what+what-to-do; empty state = action invitation |
-| Modals | Correct type for risk level; size tiers; cancel left, confirm right |
-| Toasts | Success auto-dismiss; error persistent; max concurrent; undo toast for soft deletes |
-| Tables | Text left / numeric right; row height; sub-labels; no badges/dots/pills |
-| Badge Ban | Badges, dots, pills = total ban system-wide; sub-label stacking or margin wash |
-| Semantic Color at Rest | Zero semantic alert color on resting surfaces; only in toasts/dialogs/validation/hover-open-menu |
-| Destructive Actions | Menu gating; ghost trigger; dialog for hard delete confirmation |
-| Header | Limited zones; fixed height; no nav links |
-| Toolbar | Max height; single-row layout; dynamic priority collapse; persistent overflow anchor; tooltip tier; primary CTA is icon+text |
-| Elevation | Defined shadow scale; surface prop on layout/card primitives |
-| Multi-Step Wizard | 3-zone layout; background draft auto-save; next never disabled; accordion review |
-| Button Text vs Icon | Transient surface buttons require text/icon+text. Persistent surface utilities are icon-only, primary CTA is icon+text. |
-| Mobile Bottom Actions | Single paradigm per app; 1–3 slot contract; safe-area scroll buffer |
-| Scrollbar Auto-Hide | Hidden at rest; visible on active scroll; fade after idle; zero-width overlay |
+| Domain | Rule | ADR |
+|---|---|---|
+| Casing | Code properties = camelCase; UI display = Title Case | ADR 0015 |
+| Layout | Defined structure; sidebar widths; z-index base→toast | ADR 0017 |
+| Spacing | Defined grid, tokens only, no ad-hoc values, content width caps | ADR 0018 |
+| Typography | Defined scale and weights; app UI capped at largest step | ADR 0019 |
+| Color | Semantic tokens only in components | ADR 0020 |
+| Icons | One library only; defined sizes; avatar immutable container | ADR 0021 |
+| Animation | No linear easing; duration budget; tooltip delay tiers; reduced-motion | ADR 0022 |
+| Transitions | Routes: fade; sections: slide; stagger limit | ADR 0022 |
+| Accessibility | WCAG 2.1 AA; focus rings; landmarks; touch targets | ADR 0023 |
+| Responsive | Mobile-first; breakpoints; component adaptation | ADR 0024 |
+| Forms | Labels above inputs; validation timing; grouping semantics | ADR 0025 |
+| Data Viz | Labeled axes+units+legend; accessible palette; tabular alt; responsive | ADR 0026 |
+| Theming | Complete token contract; minimum dark mode delta; override persistence | ADR 0028 |
+| Buttons | 1 primary per surface; destructive only in active confirm/hover; loading state | ADR 0029 |
+| Content Format | Relative time threshold; currency format; unknowns = em-dash | ADR 0030 |
+| Copy | Verb-first labels; error = what+what-to-do; empty state = action invitation | ADR 0031 |
+| Modals | Correct type for risk level; size tiers; cancel left, confirm right | ADR 0032 |
+| Toasts | Success auto-dismiss; error persistent; max concurrent; undo toast for soft deletes | ADR 0033 |
+| Tables | Text left / numeric right; row height; sub-labels; no badges/dots/pills | ADR 0034 |
+| Badge Ban | Badges, dots, pills = total ban system-wide; sub-label stacking or margin wash | ADR 0035 |
+| Semantic Color at Rest | Zero semantic alert color on resting surfaces; only in toasts/dialogs/validation/hover-open-menu | ADR 0036 |
+| Destructive Actions | Menu gating; ghost trigger; dialog for hard delete confirmation | ADR 0036 |
+| Header | Limited zones; fixed height; no nav links | ADR 0037 |
+| Toolbar | Max height; single-row layout; dynamic priority collapse; persistent overflow anchor; tooltip tier; primary CTA is icon+text | ADR 0039 |
+| Split Pane | DynamicInspector CSS Grid, priority rankings | ADR 0040 |
+| Elevation | Defined shadow scale; surface prop on layout/card primitives | ADR 0041 |
+| Multi-Step Wizard | 3-zone layout; background draft auto-save; next never disabled; accordion review | ADR 0042 |
+| Button Text vs Icon | Transient surface buttons require text/icon+text. Persistent surface utilities are icon-only, primary CTA is icon+text. | ADR 0043 |
+| Mobile Bottom Actions | Single paradigm per app; 1–3 slot contract; safe-area scroll buffer | ADR 0041 |
+| Scrollbar Auto-Hide | Hidden at rest; visible on active scroll; fade after idle; zero-width overlay | ADR 0044 |
