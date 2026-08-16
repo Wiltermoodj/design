@@ -8,9 +8,9 @@ last_updated: "2026-08-08T06:15:00Z"
 
 # Design Principles
 
-Architectural Decision Records governing visual design, interaction patterns, and UI/UX standards for The Bicycle Butler CRM. All design ADRs are **Accepted** and enforced by the `design-system` agent skill.
+Architectural Decision Records governing visual design, interaction patterns, and UI/UX standards for any UI project. All design ADRs are **Accepted** and enforced by the `design-guidelines` agent skill.
 
-> **Agent note:** Read `.agents/skills/design-system/SKILL.md` for the compiled enforcement checklist. Read individual ADRs for full rationale and detailed rules.
+> **Agent note:** Read `SKILL.md` for the compiled enforcement checklist. Read individual ADRs for full rationale and detailed rules.
 
 ## Code & Naming Standards
 

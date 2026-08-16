@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 REPO="https://github.com/Wiltermoodj/design.git"
-SKILL_SRC="skills/design-guidelines"
+SKILL_SRC="."
 TMP_DIR="${TMPDIR:-/tmp}/design-install-$$"
 HERMES_SKILLS_DIR="${HERMES_SKILLS_DIR:-$HOME/.hermes/skills/design-guidelines}"
 SOURCE_DIR=""
