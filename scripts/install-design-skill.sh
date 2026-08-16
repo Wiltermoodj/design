@@ -9,6 +9,11 @@ SOURCE_DIR=""
 cleanup() { rm -rf "$TMP_DIR" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
+CHECK_ONLY=false
+if [ "${1:-}" = "--check" ]; then
+  CHECK_ONLY=true
+fi
+
 if git -C "$(pwd)" rev-parse --is-inside-work-tree >/dev/null 2>&1 && [ -f "$(pwd)/README.md" ]; then
   if [ -d "$(pwd)/$SKILL_SRC" ]; then
     SOURCE_DIR="$(pwd)"
@@ -48,12 +53,22 @@ else
 fi
 
 if [ -d "$SOURCE_DIR/$SKILL_SRC" ]; then
-  echo "[design-install] Installing skill to $HERMES_SKILLS_DIR ..."
-  mkdir -p "$HERMES_SKILLS_DIR"
-  cp -R "$SOURCE_DIR/$SKILL_SRC/." "$HERMES_SKILLS_DIR/"
-  echo "[design-install] Installed design-guidelines skill."
+  if [ "$CHECK_ONLY" = true ]; then
+    echo "[design-install] CHECK OK: bundled skill path '$SKILL_SRC' present in source."
+  else
+    echo "[design-install] Installing skill to $HERMES_SKILLS_DIR ..."
+    mkdir -p "$HERMES_SKILLS_DIR"
+    cp -R "$SOURCE_DIR/$SKILL_SRC/." "$HERMES_SKILLS_DIR/"
+    echo "[design-install] Installed design-guidelines skill."
+  fi
 else
+  if [ "$CHECK_ONLY" = true ]; then
+    echo "[design-install] CHECK FAIL: bundled skill path '$SKILL_SRC' not present in source."
+    exit 1
+  fi
   echo "[design-install] SKIP: bundled skill path '$SKILL_SRC' not present in source; run from the design repo if needed."
 fi
 
-echo "[design-install] Re-run this script to upgrade from latest upstream."
+if [ "$CHECK_ONLY" = true ]; then
+  echo "[design-install] CHECK OK: source validates and is installable."
+fi
