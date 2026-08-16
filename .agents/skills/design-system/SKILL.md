@@ -1,7 +1,7 @@
 ---
-status: 
-type: 
-title: 
+title: design-system
+type: skill
+status: active
 name: design-system
 description: >
   Enforces The Bicycle Butler CRM design system (26 ADRs: 0015–0043) when writing or reviewing UI code.

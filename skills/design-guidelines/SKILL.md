@@ -1,8 +1,10 @@
 ---
-title: 
-type: 
+title: design-guidelines
+type: skill
 status: active
-description: > name: design-guidelines | layout structure, spacing tokens, typography, color systems, icons/imagery,
+description: >
+  Layout structure, spacing tokens, typography, color systems, icons/imagery,
+  motion, accessibility, dark mode, forms, and component standards for any UI project.
 last_updated: 2026-08-15
 ---
 

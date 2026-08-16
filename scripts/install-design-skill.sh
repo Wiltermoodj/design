@@ -47,17 +47,13 @@ else
   echo "[design-install] SKIP: link validator not found in source"
 fi
 
-if [ -n "$SOURCE_DIR" ] && [ "$SOURCE_DIR" != "$TMP_DIR" ]; then
-  echo "[design-install] Source tree already validated; no copy needed."
+if [ -d "$SOURCE_DIR/$SKILL_SRC" ]; then
+  echo "[design-install] Installing skill to $HERMES_SKILLS_DIR ..."
+  mkdir -p "$HERMES_SKILLS_DIR"
+  cp -R "$SOURCE_DIR/$SKILL_SRC/." "$HERMES_SKILLS_DIR/"
+  echo "[design-install] Installed design-guidelines skill."
 else
-  if [ ! -d "$SOURCE_DIR/$SKILL_SRC" ]; then
-    echo "[design-install] SKIP: bundled skill path '$SKILL_SRC' not present in upstream; run from the design repo if needed."
-  else
-    echo "[design-install] Installing skill to $HERMES_SKILLS_DIR ..."
-    mkdir -p "$HERMES_SKILLS_DIR"
-    cp -R "$SOURCE_DIR/$SKILL_SRC/." "$HERMES_SKILLS_DIR/"
-    echo "[design-install] Installed design-guidelines skill."
-  fi
+  echo "[design-install] SKIP: bundled skill path '$SKILL_SRC' not present in source; run from the design repo if needed."
 fi
 
 echo "[design-install] Re-run this script to upgrade from latest upstream."
