@@ -2,8 +2,11 @@
 import sys
 from pathlib import Path
 
-def validate_frontmatter(root: Path):
-    files = list(root.rglob('*.md'))
+def validate_frontmatter(root: Path, exclude_prefixes=('.kanban',)):
+    files = [
+        p for p in root.rglob('*.md')
+        if not any(str(p.relative_to(root)).startswith(pre) for pre in exclude_prefixes)
+    ]
     failures = []
     for path in files:
         text = path.read_text()

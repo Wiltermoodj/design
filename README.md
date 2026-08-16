@@ -20,6 +20,8 @@ git clone https://github.com/Wiltermoodj/design.git /tmp/design && cd /tmp/desig
 bash scripts/install-design-skill.sh
 ```
 
+For local development or offline validation, run from the cloned `design` repository root directly.
+
 ## Validate
 
 ```bash
@@ -45,6 +47,20 @@ python scripts/ci/validate_links.py .
 ```bash
 bash scripts/install-design-skill.sh
 ```
+
+Re-run the install script from any checkout of this repo to refresh the skill from upstream.
+
+## Uninstall
+
+Remove the installed skill directory:
+
+```bash
+rm -rf "${HERMES_SKILLS_DIR:-$HOME/.hermes/skills/design-guidelines}"
+```
+
+## Fallback behavior
+
+The install script prefers a local source tree when run from inside a cloned copy of this repo; otherwise it falls back to cloning upstream into a temporary directory. If the expected bundled skill path is missing upstream, the script logs a skip message instead of failing.
 
 ## License
 

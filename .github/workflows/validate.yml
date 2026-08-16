@@ -18,5 +18,5 @@ jobs:
         run: python scripts/ci/validate_frontmatter.py .
       - name: Validate links
         run: python scripts/ci/validate_links.py .
-      - name: Check script syntax
-        run: bash -n scripts/install-design-skill.sh scripts/ci/*.sh 2>/dev/null || true
+      - name: Validate install script
+        run: bash scripts/install-design-skill.sh
