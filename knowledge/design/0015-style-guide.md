@@ -8,7 +8,7 @@ last_updated: "2026-07-18T17:50:00Z"
 # 0015 - Style Guide
 
 ## Context
-codebase defines schemas, interfaces, types, and database models using inconsistent casing styles, including `snake_case`, `Title Case`, `PascalCase`, and `kebab-case`. inconsistency causes confusion, type-safety gaps, and integration friction across core CRM, Field Ops, functions, and frontend components. need single, unified casing standard for property names across codebase while ensuring user-facing labels in user interface (UI) correctly rendered in `Title Case`.
+codebase defines schemas, interfaces, types, and database models using inconsistent casing styles, including `snake_case`, `Title Case`, `PascalCase`, and `kebab-case`. inconsistency causes confusion, type-safety gaps, and integration friction across frontend components and backend services. need single, unified casing standard for property names across codebase while ensuring user-facing labels in user interface (UI) correctly rendered in `Title Case`.
 
 ## Decision
 mandate following casing requirements:

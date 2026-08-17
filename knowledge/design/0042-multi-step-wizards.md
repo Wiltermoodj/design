@@ -37,7 +37,7 @@ For data import wizards, Step 3 (Review & Validate) must adhere to Meta/Facebook
 - **Status Filter Tabs:** Top filter bar allowing operators to isolate rows: `All Rows (N)`, `Valid (N)`, `Needs Attention / Errors (N)`, and `Conflicts (N)`.
 - **Inline Cell Editing & Resolution:** Spreadsheet-like cell rendering allowing direct editing of invalid values (e.g. fixing date formats, choosing a Dealer from an inline combobox cell) with real-time re-validation.
 - **Bulk Mass-Fix Actions:** One-click toolbar actions to resolve batch errors (e.g. *"Assign all 15 unlinked dealers to Org X"*, *"Approve all new tags"*, or *"Default missing priority to Medium"*).
-- **Value-Mapping Step (Step 2):** Support mapping raw CSV text values (such as stage names "In Negotiation" or priorities "Urgent") directly to CRM schema enum identifiers before record validation.
+- **Value-Mapping Step (Step 2):** Support mapping raw CSV text values (such as stage names "In Negotiation" or priorities "Urgent") directly to application schema enum identifiers before record validation.
 
 ### 5 — Brand Templates & Template Precedence Over AI
 - **Multi-Template Brand Configuration:** Brands can store multiple named import templates (e.g., *Monthly Sell-Through*, *Quarterly YoY Report*, *Pre-Season Booking*).
@@ -47,7 +47,7 @@ For data import wizards, Step 3 (Review & Validate) must adhere to Meta/Facebook
 ### 6 — Server Job Persistence & Async Status Drawer
 - **Decoupled Server Staging:** Files are staged in Cloud Storage and executed in server-side background worker chunks.
 - **Persistent Floating UI Drawer:** When an operator clicks `[ Run in Background ]`, the wizard collapses into a floating bottom-right drawer (`<ImportStatusDrawer />`) showing live percentage progress and row counters.
-- **Cross-Page & Off-Site Persistence:** The status drawer remains visible during SPA navigation across CRM pages (`/contacts`, `/organizations`, `/analytics`). Closing the browser tab does NOT interrupt the server import job; upon return, the user receives an alert toast and badge with job results.
+- **Cross-Page & Off-Site Persistence:** The status drawer remains visible during SPA navigation across application pages (`/contacts`, `/organizations`, `/analytics`). Closing the browser tab does NOT interrupt the server import job; upon return, the user receives an alert toast and badge with job results.
 
 ### 7 — 3-Tier Interval Deduction & Temporal Merging
 - **3-Tier Sales Interval Engine:** Handles date overlaps via:

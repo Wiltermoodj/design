@@ -51,7 +51,7 @@ function auditFile(filePath: string): Violation[] {
         adr: 'ADR 0035',
         severity: 'ERROR',
         snippet: lineText.trim(),
-        description: 'Usage of deprecated Badge component. Replace with Concept C sub-label stacking or Concept A margin wash.'
+        description: 'Usage of deprecated Badge component. Replace with Sub-label Stacking or Margin Wash Variant.'
       });
     }
 
@@ -64,7 +64,7 @@ function auditFile(filePath: string): Violation[] {
         adr: 'ADR 0035',
         severity: 'WARNING',
         snippet: lineText.trim(),
-        description: 'Colored status dots are deprecated. Use Concept C sub-label stacking.'
+        description: 'Colored status dots are deprecated. Use Sub-label Stacking.'
       });
     }
 

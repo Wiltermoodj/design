@@ -30,7 +30,7 @@ Page toolbars enforce a strict 2-zone horizontal layout:
 | PAGE TOOLBAR BAR (Fixed Height: 52px, Strict Single-Row Layout)                                 |
 | +------------------------------------+   +----------------------------------------------------+ |
 | | [Title] (e.g., Contacts)           |   | [Search]  [Filter]  [Secondary]  [Primary]  [⋮]     | |
-| | [Sub-label Count (Concept C)]      |   | (Adaptive Priority Collapse Sequence → [⋮] Menu)   | |
+| | [Sub-label Count (Sub-label Stacking)]      |   | (Adaptive Priority Collapse Sequence → [⋮] Menu)   | |
 | +------------------------------------+   +----------------------------------------------------+ |
 +-------------------------------------------------------------------------------------------------+
 ```

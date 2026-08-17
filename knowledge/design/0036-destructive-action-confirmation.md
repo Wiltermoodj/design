@@ -23,7 +23,7 @@ This is the foundational rule governing all semantic colors (success, warning, a
   - Success / warning / error colors → **transient toast notifications** (<4–8s auto-dismiss, per [ADR 0033](0033-toast-notification-rules.md))
   - Form validation error colors → **only on active blur or submission failure** (per [ADR 0025](0025-forms-inputs.md) §3)
   - Change indicators (percentage up/down) → permitted inline in data tables and KPI cards (contextual data display, not status signaling)
-- **Neutral at Rest:** Resting buttons, cards, table rows, and status strings must rely exclusively on neutral typography, opacity hierarchy (Concept C), and spacing — never semantic color — to convey categorical state.
+- **Neutral at Rest:** Resting buttons, cards, table rows, and status strings must rely exclusively on neutral typography, opacity hierarchy (Sub-label Stacking), and spacing — never semantic color — to convey categorical state.
 
 ### 2 — Menu-Gated Destructive Entry Points
 - **Resting Trigger Neutrality:** Resting buttons preceding a destructive workflow **must remain neutral or `ghost` style**. Persistent red "Delete" buttons on resting screens are strictly forbidden (covered by Rule 1 above).

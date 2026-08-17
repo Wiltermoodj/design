@@ -20,7 +20,7 @@ last_updated: "2026-08-08T05:45:00Z"
 
 All categorical attributes, record tiers, and status information must be displayed using one of two approved system patterns:
 
-#### Concept C (System Standard — Default)
+#### Sub-label Stacking (System Standard — Default)
 - **Sub-label Stacking Inside a Single Cell:** Primary text sits on the top line; secondary metadata, tier names, and IDs sit stacked on the bottom line within the exact same primary cell.
 - **Typography & Opacity Hierarchy:**
   - **Top Line:** Primary Identifier / Name in `font-medium text-foreground`.
@@ -31,13 +31,13 @@ All categorical attributes, record tiers, and status information must be display
 [ Gold Tier · ID: #84920                          ]
 ```
 
-#### Concept A (Enhanced Flare Variant — Option)
+#### Margin Wash Variant (Enhanced Flare Variant — Option)
 - **Left-Edge Margin Wash:** Reserved for high-contrast or brand-flair requirements.
 - **Visual Spec:** A subtle left-edge margin gradient wash ($\approx$6%–12% opacity linear gradient fading out completely within the first 20%–30% container width) applied to the record row or primary cell.
 
 ### 3 — Numeric Right-Alignment
 - **Mandatory Right-Alignment:** All metrics, financial amounts, percentages, transaction counts, and dates **must strictly be right-aligned** (`text-right`) to align decimal places and numerical scale vertically for instant scanning.
-- **Left-Alignment:** Text strings, names, and stacked Concept C labels are left-aligned (`text-left`).
+- **Left-Alignment:** Text strings, names, and stacked Sub-label Stacking labels are left-aligned (`text-left`).
 - **Column Header Alignment:** Headers must align with their column data (right-align numeric headers, left-align text headers).
 
 ### 4 — Density Toggle Specs
@@ -54,11 +54,11 @@ Tables must support a user density toggle:
 **Canonical source:** [ADR 0024 §3 — Responsive & Adaptive Layout](0024-responsive-layout.md) defines the full Desktop / Tablet / Mobile table adaptation spec. Summary:
 - **Desktop (>1024px):** Full structured table.
 - **Tablet (768px–1024px):** Progressive column hiding; secondary columns collapse into expandable detail rows.
-- **Mobile (<768px):** Mandatory Mobile Card Transformation — grid structures dismantle into stacked cards with Concept C sub-labels.
+- **Mobile (<768px):** Mandatory Mobile Card Transformation — grid structures dismantle into stacked cards with Sub-label Stacking.
 
 ## Consequences
 - Data tables are clean, scannable, and free of noisy badges, dots, and grid lines.
 - Numeric alignment enables effortless visual comparison of figures across rows.
-- Concept C sub-label stacking compresses primary data and secondary status into a single readable column.
+- Sub-label Stacking compresses primary data and secondary status into a single readable column.
 - Menu-gated destructive actions prevent accidental record deletion.
 
