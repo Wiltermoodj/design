@@ -98,6 +98,8 @@ Read `REFERENCE.md` for full token tables, decision trees, and lookup references
 | Button variant for overflow trigger? | ghost |
 | Missing value display? | em-dash, never N/A/null/-/blank |
 | When should buttons be icon-only or have text? | Persistent surface utilities are icon-only, except max 1 primary CTA which must be icon+text. Transient surface buttons must have text or icon+text. |
+| How to structure split-pane detail cards? | Dynamic CSS Grid Inspector Pane layout with entity priority rankings (ADR 0040) |
+| Which mobile bottom action pattern to use? | Evaluate app-wide needs: Sticky Footer (1–3 slots) or FAB paradigm, never mix (ADR 0041 mobile) |
 
 ## Key Rules (inline reference)
 
@@ -131,5 +133,5 @@ Read `REFERENCE.md` for full token tables, decision trees, and lookup references
 | Elevation | Defined shadow scale; surface prop on layout/card primitives | ADR 0041 |
 | Multi-Step Wizard | 3-zone layout; background draft auto-save; next never disabled; accordion review | ADR 0042 |
 | Button Text vs Icon | Transient surface buttons require text/icon+text. Persistent surface utilities are icon-only, primary CTA is icon+text. | ADR 0043 |
-| Mobile Bottom Actions | Single paradigm per app; 1–3 slot contract; safe-area scroll buffer | ADR 0041 |
+| Mobile Bottom Actions | Single paradigm per app; 1–3 slot contract; safe-area scroll buffer | ADR 0041 mobile |
 | Scrollbar Auto-Hide | Hidden at rest; visible on active scroll; fade after idle; zero-width overlay | ADR 0044 |
