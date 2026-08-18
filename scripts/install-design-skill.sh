@@ -52,6 +52,18 @@ else
   echo "[design-install] SKIP: link validator not found in source"
 fi
 
+echo "[design-install] Verifying ADR integrity ..."
+VERIFY_ADR_SCRIPT="$SOURCE_DIR/scripts/verify-design-adrs.ts"
+if [ -f "$VERIFY_ADR_SCRIPT" ]; then
+  if ! (cd "$SOURCE_DIR" && npx -y tsx "$VERIFY_ADR_SCRIPT") >/dev/null 2>&1; then
+    echo "[design-install] ERROR: ADR verification failed"
+    (cd "$SOURCE_DIR" && npx -y tsx "$VERIFY_ADR_SCRIPT") || true
+    exit 1
+  fi
+else
+  echo "[design-install] SKIP: ADR verifier not found in source"
+fi
+
 if [ -d "$SOURCE_DIR/$SKILL_SRC" ]; then
   if [ "$CHECK_ONLY" = true ]; then
     echo "[design-install] CHECK OK: bundled skill path '$SKILL_SRC' present in source."

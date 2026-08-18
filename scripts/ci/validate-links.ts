@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-async function getFiles(dir: string, files: string[] = [], excludePrefixes: string[] = ['.kanban', 'node_modules']): Promise<string[]> {
+async function getFiles(dir: string, files: string[] = [], excludePrefixes: string[] = ['.kanban', 'node_modules', 'scratch']): Promise<string[]> {
     try {
         const dirents = await fs.promises.readdir(dir, { withFileTypes: true });
         for (const dirent of dirents) {

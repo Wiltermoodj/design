@@ -15,23 +15,26 @@ const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
 
 async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promise<string[]> {
   try {
+    if (!fs.existsSync(dirPath)) {
+      return arrayOfFiles;
+    }
     const files = await fs.promises.readdir(dirPath);
-    const promises = files.map(async (file) => {
+    for (const file of files) {
+      if (file === 'node_modules' || file === '.next' || file === '.git' || file === 'dist' || file === 'build') {
+        continue;
+      }
       const fullPath = path.join(dirPath, file);
       try {
         const stat = await fs.promises.stat(fullPath);
         if (stat.isDirectory()) {
-          if (file !== 'node_modules' && file !== '.next') {
-            await getAllFiles(fullPath, arrayOfFiles);
-          }
+          await getAllFiles(fullPath, arrayOfFiles);
         } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
           arrayOfFiles.push(fullPath);
         }
       } catch (e) {
-        // ignore
+        // ignore unreadable file/stat error safely
       }
-    });
-    await Promise.all(promises);
+    }
   } catch(e) {
     // ignore
   }
@@ -40,7 +43,12 @@ async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promis
 
 async function auditFile(filePath: string): Promise<Violation[]> {
   const relativePath = path.relative(process.cwd(), filePath);
-  const content = await fs.promises.readFile(filePath, 'utf8');
+  let content = '';
+  try {
+    content = await fs.promises.readFile(filePath, 'utf8');
+  } catch (e) {
+    return [];
+  }
   const lines = content.split('\n');
   const violations: Violation[] = [];
 
