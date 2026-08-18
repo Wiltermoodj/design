@@ -3,23 +3,33 @@ import path from 'path';
 
 const COMPONENTS_DIR = path.resolve(process.cwd(), 'src/components');
 
-function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
-  const files = fs.readdirSync(dirPath);
-
-  files.forEach((file) => {
-    const fullPath = path.join(dirPath, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
-    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-      arrayOfFiles.push(fullPath);
-    }
-  });
-
+async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promise<string[]> {
+  try {
+    const files = await fs.promises.readdir(dirPath);
+    const promises = files.map(async (file) => {
+      const fullPath = path.join(dirPath, file);
+      try {
+        const stat = await fs.promises.stat(fullPath);
+        if (stat.isDirectory()) {
+          if (file !== 'node_modules' && file !== '.next') {
+            await getAllFiles(fullPath, arrayOfFiles);
+          }
+        } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
+          arrayOfFiles.push(fullPath);
+        }
+      } catch (e) {
+        // ignore
+      }
+    });
+    await Promise.all(promises);
+  } catch(e) {
+    // ignore
+  }
   return arrayOfFiles;
 }
 
-function remediateBadgeInFile(filePath: string) {
-  const content = fs.readFileSync(filePath, 'utf8');
+async function remediateBadgeInFile(filePath: string) {
+  const content = await fs.promises.readFile(filePath, 'utf8');
   if (!content.includes('badge') && !content.includes('Badge')) return false;
 
   let modified = false;
@@ -59,22 +69,22 @@ function remediateBadgeInFile(filePath: string) {
   newContent = newContent.replace(/w-2\s+h-2\s+rounded-full\s+bg-[a-z0-9-/]+/g, 'text-xs text-muted-foreground/60 font-medium');
 
   if (modified) {
-    fs.writeFileSync(filePath, newContent, 'utf8');
+    await fs.promises.writeFile(filePath, newContent, 'utf8');
     return true;
   }
   return false;
 }
 
-function runBadgeRemediation() {
-  const files = getAllFiles(COMPONENTS_DIR);
+async function runBadgeRemediation() {
+  const files = await getAllFiles(COMPONENTS_DIR);
   let count = 0;
-  files.forEach((filePath) => {
-    if (remediateBadgeInFile(filePath)) {
+  await Promise.all(files.map(async (filePath) => {
+    if (await remediateBadgeInFile(filePath)) {
       count++;
       console.log(`Remediated Badge deprecation in: ${path.relative(process.cwd(), filePath)}`);
     }
-  });
+  }));
   console.log(`\nCompleted Badge remediation across ${count} files.`);
 }
 
-runBadgeRemediation();
+runBadgeRemediation().catch(console.error);

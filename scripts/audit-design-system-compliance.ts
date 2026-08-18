@@ -13,27 +13,34 @@ interface Violation {
 
 const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
 
-function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
-  if (!fs.existsSync(dirPath)) return arrayOfFiles;
-  const files = fs.readdirSync(dirPath);
-
-  files.forEach((file) => {
-    const fullPath = path.join(dirPath, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      if (file !== 'node_modules' && file !== '.next') {
-        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promise<string[]> {
+  try {
+    const files = await fs.promises.readdir(dirPath);
+    const promises = files.map(async (file) => {
+      const fullPath = path.join(dirPath, file);
+      try {
+        const stat = await fs.promises.stat(fullPath);
+        if (stat.isDirectory()) {
+          if (file !== 'node_modules' && file !== '.next') {
+            await getAllFiles(fullPath, arrayOfFiles);
+          }
+        } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
+          arrayOfFiles.push(fullPath);
+        }
+      } catch (e) {
+        // ignore
       }
-    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-      arrayOfFiles.push(fullPath);
-    }
-  });
-
+    });
+    await Promise.all(promises);
+  } catch(e) {
+    // ignore
+  }
   return arrayOfFiles;
 }
 
-function auditFile(filePath: string): Violation[] {
+async function auditFile(filePath: string): Promise<Violation[]> {
   const relativePath = path.relative(process.cwd(), filePath);
-  const content = fs.readFileSync(filePath, 'utf8');
+  const content = await fs.promises.readFile(filePath, 'utf8');
   const lines = content.split('\n');
   const violations: Violation[] = [];
 
@@ -307,8 +314,8 @@ function auditFile(filePath: string): Violation[] {
   return violations;
 }
 
-function runAudit() {
-  const files = getAllFiles(TARGET_DIR);
+async function runAudit() {
+  const files = await getAllFiles(TARGET_DIR);
   const relTargetDir = path.relative(process.cwd(), TARGET_DIR);
   console.log(`Auditing ${files.length} files in ${relTargetDir}...\n`);
 
@@ -320,13 +327,13 @@ function runAudit() {
   const allViolations: Violation[] = [];
   const filesWithViolations = new Set<string>();
 
-  files.forEach((file) => {
-    const fileViolations = auditFile(file);
-    if (fileViolations.length > 0) {
-      filesWithViolations.add(file);
-      allViolations.push(...fileViolations);
-    }
-  });
+  await Promise.all(files.map(async (file) => {
+      const fileViolations = await auditFile(file);
+      if (fileViolations.length > 0) {
+        filesWithViolations.add(file);
+        allViolations.push(...fileViolations);
+      }
+    }));
 
   // Group by directory path relative to src/
   const byDir: Record<string, Violation[]> = {};
@@ -358,7 +365,7 @@ function runAudit() {
     violations: allViolations
   };
 
-  fs.writeFileSync('scratch/design-audit-results.json', JSON.stringify(report, null, 2));
+  await fs.promises.writeFile('scratch/design-audit-results.json', JSON.stringify(report, null, 2));
 
   // Generate Markdown summary
   let md = `# Design System Compliance Audit Report\n\n`;
@@ -391,8 +398,8 @@ function runAudit() {
     md += `\n*... and ${allViolations.length - 100} more violations logged in scratch/design-audit-results.json*\n`;
   }
 
-  fs.writeFileSync('scratch/design-audit-report.md', md);
+  await fs.promises.writeFile('scratch/design-audit-report.md', md);
   console.log(`Audit complete! Summary written to scratch/design-audit-report.md`);
 }
 
-runAudit();
+runAudit().catch(console.error);

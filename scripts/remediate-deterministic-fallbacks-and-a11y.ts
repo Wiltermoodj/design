@@ -15,10 +15,10 @@ const FALLBACK_FILES = [
   'src/components/copilot/drawer.tsx'
 ];
 
-function remediateFallbacks() {
-  FALLBACK_FILES.forEach((filePath) => {
+async function remediateFallbacks() {
+  await Promise.all(FALLBACK_FILES.map(async (filePath) => {
     if (!fs.existsSync(filePath)) return;
-    let content = fs.readFileSync(filePath, 'utf8');
+    let content = await fs.promises.readFile(filePath, 'utf8');
 
     // Replace "Unknown", 'Unknown', "None", 'None', "-", '-' fallbacks with em-dash "—"
     content = content
@@ -32,9 +32,9 @@ function remediateFallbacks() {
       .replace(/["']N\/A["']/g, '"—"')
       .replace(/['"]n\/a['"]/g, '"—"');
 
-    fs.writeFileSync(filePath, content, 'utf8');
+    await fs.promises.writeFile(filePath, content, 'utf8');
     console.log(`Remediated fallbacks in ${filePath}`);
-  });
+  }));
 }
 
 const EMOJI_FILES = [
@@ -46,10 +46,10 @@ const EMOJI_FILES = [
   'src/components/ui/inline/inline-location-select.tsx'
 ];
 
-function remediateEmojis() {
-  EMOJI_FILES.forEach((filePath) => {
+async function remediateEmojis() {
+  await Promise.all(EMOJI_FILES.map(async (filePath) => {
     if (!fs.existsSync(filePath)) return;
-    let content = fs.readFileSync(filePath, 'utf8');
+    let content = await fs.promises.readFile(filePath, 'utf8');
 
     // Replace emojis
     content = content
@@ -61,9 +61,9 @@ function remediateEmojis() {
       .replace(/📎/g, 'Attachment')
       .replace(/✕/g, 'Close');
 
-    fs.writeFileSync(filePath, content, 'utf8');
+    await fs.promises.writeFile(filePath, content, 'utf8');
     console.log(`Remediated emojis in ${filePath}`);
-  });
+  }));
 }
 
 const A11Y_FILES = [
@@ -78,10 +78,10 @@ const A11Y_FILES = [
   'src/components/trade-agreements/trade-agreements-data-table.tsx'
 ];
 
-function remediateA11y() {
-  A11Y_FILES.forEach((filePath) => {
+async function remediateA11y() {
+  await Promise.all(A11Y_FILES.map(async (filePath) => {
     if (!fs.existsSync(filePath)) return;
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = await fs.promises.readFile(filePath, 'utf8');
     const lines = content.split('\n');
     const newLines = lines.map((line) => {
       if (/<Button[^>]*size=["'](?:icon|icon-sm|icon-lg)["'][^>]*>/.test(line) && !line.includes('aria-label')) {
@@ -99,11 +99,14 @@ function remediateA11y() {
       }
       return line;
     });
-    fs.writeFileSync(filePath, newLines.join('\n'), 'utf8');
+    await fs.promises.writeFile(filePath, newLines.join('\n'), 'utf8');
     console.log(`Remediated a11y icon buttons in ${filePath}`);
-  });
+  }));
 }
 
-remediateFallbacks();
-remediateEmojis();
-remediateA11y();
+async function run() {
+  await remediateFallbacks();
+  await remediateEmojis();
+  await remediateA11y();
+}
+run().catch(console.error);
