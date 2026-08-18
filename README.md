@@ -25,8 +25,8 @@ For local development or offline validation, run from the cloned `design` reposi
 ## Validate
 
 ```bash
-python scripts/ci/validate_frontmatter.py .
-python scripts/ci/validate_links.py .
+node --experimental-strip-types scripts/ci/validate-frontmatter.ts .
+node --experimental-strip-types scripts/ci/validate-links.ts .
 ```
 
 ## Quick Preview

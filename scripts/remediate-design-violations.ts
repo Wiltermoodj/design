@@ -13,20 +13,20 @@ interface AuditReport {
   violations: Violation[];
 }
 
-function runPhase3Remediation() {
+async function runPhase3Remediation() {
   const jsonPath = path.resolve(process.cwd(), 'scratch/design-audit-results.json');
   if (!fs.existsSync(jsonPath)) return;
 
-  const report: AuditReport = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  const report: AuditReport = JSON.parse(await fs.promises.readFile(jsonPath, 'utf8'));
   const fileSet = new Set(report.violations.map(v => v.file));
 
   let fixedCount = 0;
 
-  fileSet.forEach((relativePath) => {
+  await Promise.all(Array.from(fileSet).map(async (relativePath) => {
     const fullPath = path.resolve(process.cwd(), relativePath);
-    if (!fs.existsSync(fullPath)) return;
+    try { await fs.promises.access(fullPath); } catch { return; }
 
-    let content = fs.readFileSync(fullPath, 'utf8');
+    let content = await fs.promises.readFile(fullPath, 'utf8');
     const originalContent = content;
     const isModalOrDialog = content.includes('AlertDialog') || content.includes('DialogContent') || content.includes('DropdownMenu') || content.includes('Popover');
 
@@ -41,12 +41,12 @@ function runPhase3Remediation() {
     }
 
     if (content !== originalContent) {
-      fs.writeFileSync(fullPath, content, 'utf8');
+      await fs.promises.writeFile(fullPath, content, 'utf8');
       fixedCount++;
     }
-  });
+  }));
 
   console.log(`✅ Phase 3 Remediation complete! Fixed residual alert fills in ${fixedCount} files.`);
 }
 
-runPhase3Remediation();
+runPhase3Remediation().catch(console.error);

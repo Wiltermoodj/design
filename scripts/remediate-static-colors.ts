@@ -13,11 +13,11 @@ const STATIC_COLOR_FILES = [
   'src/components/tasks/task-list.client.tsx'
 ];
 
-function remediateStaticColors() {
+async function remediateStaticColors() {
   STATIC_COLOR_FILES.forEach((filePath) => {
     const fullPath = path.resolve(process.cwd(), filePath);
-    if (!fs.existsSync(fullPath)) return;
-    let content = fs.readFileSync(fullPath, 'utf8');
+    try { await fs.promises.access(fullPath); } catch { return; }
+    let content = await fs.promises.readFile(fullPath, 'utf8');
 
     // Replace resting static alert color classes with neutral resting + hover-gated accent wash per user decision
     let modified = false;
@@ -25,8 +25,8 @@ function remediateStaticColors() {
     // Red resting alerts -> neutral resting with hover red accent
     if (content.includes('bg-rose-500') || content.includes('text-rose-300') || content.includes('border-rose-500')) {
       content = content
-        .replace(/bg-rose-500\/20\s+text-rose-300\s+border-rose-500\/30/g, 'bg-muted/40 text-muted-foreground border-border/40 hover:bg-destructive/10 hover:text-destructive')
-        .replace(/bg-rose-950\/30\s+text-rose-400\s+border-rose-900\/40/g, 'bg-muted/30 text-muted-foreground hover:bg-destructive/10 hover:text-destructive');
+        .replace(/bg-rose-500\/20\s+text-rose-300\s+border-rose-500\/30/g, 'bg-muted/40 text-muted-foreground border-border/40 hover:bg-muted/50 hover:text-destructive')
+        .replace(/bg-rose-950\/30\s+text-rose-400\s+border-rose-900\/40/g, 'bg-muted/30 text-muted-foreground hover:bg-muted/50 hover:text-destructive');
       modified = true;
     }
 
@@ -49,10 +49,10 @@ function remediateStaticColors() {
     }
 
     if (modified) {
-      fs.writeFileSync(fullPath, content, 'utf8');
+      await fs.promises.writeFile(fullPath, content, 'utf8');
       console.log(`Remediated static alert colors in ${filePath}`);
     }
   });
 }
 
-remediateStaticColors();
+remediateStaticColors().catch(console.error);
