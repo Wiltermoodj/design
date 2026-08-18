@@ -8,8 +8,8 @@ description: Phase boundaries and current priorities for the design project.
 # Priorities
 
 ## Phase 1: Bootstrap foundation
-- Copy source design docs, scripts, and skills into `/Users/lappier/code/projects/design`
-- Create a codebase-agnostic `design-guidelines` skill from the CRM-specific `design-system` skill
+- Copy source design docs, scripts, and skills into `a new repository`
+- Create a codebase-agnostic `design-guidelines` skill from an application-specific `design-system` skill
 - Normalize markdown frontmatter and fix cross-references
 - Add terminal install script and README
 

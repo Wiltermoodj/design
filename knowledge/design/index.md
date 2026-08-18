@@ -1,7 +1,7 @@
 ---
 title: "Design Principles Index"
 type: "index"
-description: "Index of all design system ADRs governing UI/UX principles for The Bicycle Butler CRM"
+description: "Index of all design system ADRs governing UI/UX principles"
 status: "active"
 last_updated: "2026-08-08T06:15:00Z"
 ---
@@ -46,8 +46,8 @@ Architectural Decision Records governing visual design, interaction patterns, an
 - [0043 - Button Text vs Icon Rules](0043-button-text-vs-icon-rules.md) — Surface presence principle, text pairing taxonomy, Primary CTA criteria, step-by-step heuristic
 - [0032 - Modal & Dialog Standards](0032-modal-dialog-standards.md) — AlertDialog vs Dialog vs Sheet, size tiers, header/footer anatomy, nesting ban
 - [0033 - Toast & Notification Rules](0033-toast-notification-rules.md) — Auto-dismiss durations, undo toast, max 3 concurrent, toast vs. bell boundary
-- [0034 - Table Design Standards](0034-table-design-standards.md) — Structural cleanliness (no badges/grid lines), Concept C/A patterns, numeric right-alignment, density toggle
-- [0035 - System Ban on Badges & Categorical Status Hierarchy](0035-badge-status-indicators.md) — Total deprecation of `badge.tsx`, pills, dots; Concept C/A replacements
+- [0034 - Table Design Standards](0034-table-design-standards.md) — Structural cleanliness (no badges/grid lines), Sub-label Stacking/Margin Wash Variant patterns, numeric right-alignment, density toggle
+- [0035 - System Ban on Badges & Categorical Status Hierarchy](0035-badge-status-indicators.md) — Total deprecation of `badge.tsx`, pills, dots; Sub-label Stacking/Margin Wash Variant replacements
 - [0036 - Semantic Color at Rest & Destructive Action Confirmation](0036-destructive-action-confirmation.md) — Zero semantic color on resting surfaces, menu-gated entry points, AlertDialog anatomy
 
 ## Forms & Data

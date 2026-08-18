@@ -36,14 +36,14 @@ function remediateBadgeInFile(filePath: string) {
 
   let newContent = filteredLines.join('\n');
 
-  // 2. Replace <Badge ...> content </Badge> with Concept C sub-label typography
+  // 2. Replace <Badge ...> content </Badge> with Sub-label Stacking typography
   // Pattern match single line or multiline Badge usage
   const badgeRegex = /<Badge\b[^>]*>([\s\S]*?)<\/Badge>/g;
 
   if (badgeRegex.test(newContent)) {
     modified = true;
     newContent = newContent.replace(badgeRegex, (match, innerText) => {
-      // Concept C System Standard: typography scale font-medium text-muted-foreground/60 text-xs
+      // Sub-label Stacking System Standard: typography scale font-medium text-muted-foreground/60 text-xs
       return `<span className="text-xs font-medium text-muted-foreground/70">${innerText.trim()}</span>`;
     });
   }

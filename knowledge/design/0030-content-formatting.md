@@ -78,4 +78,4 @@ No standard exists for how dates, times, numbers, currency, or "unknown" values 
 - All user-facing values display consistently regardless of which component renders them.
 - "Unknown" states are visually unambiguous and never confused with zero or false values.
 - Relative time keeps feeds feeling alive while absolute tooltips preserve precision.
-- Currency formatting matches user expectations for a US-market sales CRM.
+- Currency formatting matches user expectations for a US-market application.

@@ -45,7 +45,7 @@ All `Card` and `ContainerPanel` components expose a `surface` prop supporting bo
 | `inset` | none (`border-0`) | `shadow-md` | `bg-muted/40` | Heavier shadow depth | Recessed read-only / metadata block |
 
 > **Design System Policy — Bordered vs Borderless:**
-> Both `bordered` and `borderless` options are first-class primitives in the design system. Applications using this design system may standardize on `borderless` or `bordered` surfaces. For Jules CRM, content cards and data tables standardly use **borderless** (`raised` / `flat`) for a clean visual hierarchy, while Main Layout structural dividers (sidebar, header, sticky footer), Form Controls (`input`, `select`), and Overlay Surfaces (`dialog`, `popover`, `dropdown`, `toast`) retain structural borders.
+> Both `bordered` and `borderless` options are first-class primitives in the design system. Applications using this design system may standardize on `borderless` or `bordered` surfaces. For data-dense applications, content cards and data tables standardly use **borderless** (`raised` / `flat`) for a clean visual hierarchy, while Main Layout structural dividers (sidebar, header, sticky footer), Form Controls (`input`, `select`), and Overlay Surfaces (`dialog`, `popover`, `dropdown`, `toast`) retain structural borders.
 
 ### 3 — Usage Rules
 

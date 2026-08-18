@@ -53,7 +53,7 @@ No primary navigation links, no page-level CTAs, and no search results belong in
 ### 5 — User Avatar Dropdown — Required Items
 The avatar dropdown must always contain in this order:
 1. User name + email (non-interactive label)
-2. Role text / Concept C sub-label if applicable (e.g. Financial Admin)
+2. Role text / Sub-label Stacking if applicable (e.g. Financial Admin)
 3. Separator
 4. "Profile" → `/settings/profile`
 5. Mode toggle (Field/HQ) if applicable

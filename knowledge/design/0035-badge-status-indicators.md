@@ -18,11 +18,11 @@ Legacy UI patterns relied on static status pills, colored dot indicators (`•`)
 
 ### 1 — System-Wide Deprecation
 - **Total Ban:** Static status pills, badges, colored dots (`•`), and standalone colored status strings are strictly prohibited across all views, tables, header bars, and cards.
-- **Component Deprecation:** `badge.tsx` is marked deprecated. Existing imports must be refactored to Concept C or Concept A data tier patterns.
+- **Component Deprecation:** `badge.tsx` is marked deprecated. Existing imports must be refactored to Sub-label Stacking or Margin Wash Variant data tier patterns.
 
 ### 2 — System-Sanctioned Replacements
 
-All categorical data, entity tiers, lifecycle states, and status metadata must be displayed using the sanctioned **Concept C** (sub-label stacking) and **Concept A** (left-edge margin wash) patterns. **Full specs are defined in [ADR 0034 §2 — Table Design Standards](0034-table-design-standards.md#2--categorical-data-tier-patterns) — refer there for implementation details.** Do not re-define or diverge from the specs in that ADR.
+All categorical data, entity tiers, lifecycle states, and status metadata must be displayed using the sanctioned **Sub-label Stacking** (sub-label stacking) and **Margin Wash Variant** (left-edge margin wash) patterns. **Full specs are defined in [ADR 0034 §2 — Table Design Standards](0034-table-design-standards.md#2--categorical-data-tier-patterns) — refer there for implementation details.** Do not re-define or diverge from the specs in that ADR.
 
 ### 3 — Unread & Notification Indicators
 Numeric unread counts or system updates must be represented as plain text numbers or inline typography integrated into item sub-labels, rather than floating colored badges.
@@ -30,5 +30,5 @@ Numeric unread counts or system updates must be represented as plain text number
 ## Consequences
 - `badge.tsx` and static pill indicators are completely eliminated.
 - Resting application views achieve visual harmony through clean typography scale.
-- Categorical attributes and status data rely on Concept C sub-label stacking system-wide.
+- Categorical attributes and status data rely on Sub-label Stacking system-wide.
 

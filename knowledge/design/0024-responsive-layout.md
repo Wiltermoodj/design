@@ -18,7 +18,7 @@ Adopt responsive layout standards across all viewports and components:
 3. **Data Table Viewport Adaptation Standards:**
    - **Desktop (>1024px):** Render a full structured data table with generous row height (48px–64px) and complete column visibility.
    - **Tablet (768px–1024px):** Enforce progressive column hiding. Secondary metadata columns collapse into expandable inline detail rows or drawer summaries while preserving core primary columns.
-   - **Mobile (<768px):** Mandatory **Mobile Card Transformation**. Data tables must dismantle grid row structures and re-render each row as a stacked card with clean internal visual hierarchy (Primary title top-left, stacked sub-labels below via Concept C). Horizontal scrolling for primary tabular data is forbidden.
+   - **Mobile (<768px):** Mandatory **Mobile Card Transformation**. Data tables must dismantle grid row structures and re-render each row as a stacked card with clean internal visual hierarchy (Primary title top-left, stacked sub-labels below via Sub-label Stacking). Horizontal scrolling for primary tabular data is forbidden.
 4. **Form & Navigation Adaptation:** Multi-column forms transition to single-column below 768px (`md`). Side panels convert to slide-over drawers below 1024px (`lg`). Navigation header collapses utility labels to icons below 640px (`sm`).
 5. **Safe Area & Sticky Footer Clearance Handling:**
    - Single Scroll Authority: Page layouts (`PageLayout`, `DetailLayout`) must not introduce nested `overflow-y-auto min-h-screen` containers inside the main app shell (`<main id="main-content">`). `<main>` handles viewport scrolling.
