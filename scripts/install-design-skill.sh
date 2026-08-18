@@ -29,12 +29,12 @@ else
 fi
 
 echo "[design-install] Validating frontmatter ..."
-FRONTMATTER_SCRIPT="$SOURCE_DIR/scripts/ci/validate_frontmatter.py"
-LINK_SCRIPT="$SOURCE_DIR/scripts/ci/validate_links.py"
-if [ -x "$FRONTMATTER_SCRIPT" ]; then
-  if ! python3 "$FRONTMATTER_SCRIPT" "$SOURCE_DIR" >/dev/null 2>&1; then
+FRONTMATTER_SCRIPT="$SOURCE_DIR/scripts/ci/validate-frontmatter.ts"
+LINK_SCRIPT="$SOURCE_DIR/scripts/ci/validate-links.ts"
+if [ -f "$FRONTMATTER_SCRIPT" ]; then
+  if ! npx -y tsx "$FRONTMATTER_SCRIPT" "$SOURCE_DIR" >/dev/null 2>&1; then
     echo "[design-install] ERROR: frontmatter validation failed"
-    python3 "$FRONTMATTER_SCRIPT" "$SOURCE_DIR" || true
+    npx -y tsx "$FRONTMATTER_SCRIPT" "$SOURCE_DIR" || true
     exit 1
   fi
 else
@@ -42,10 +42,10 @@ else
 fi
 
 echo "[design-install] Validating links ..."
-if [ -x "$LINK_SCRIPT" ]; then
-  if ! python3 "$LINK_SCRIPT" "$SOURCE_DIR" >/dev/null 2>&1; then
+if [ -f "$LINK_SCRIPT" ]; then
+  if ! npx -y tsx "$LINK_SCRIPT" "$SOURCE_DIR" >/dev/null 2>&1; then
     echo "[design-install] ERROR: link validation failed"
-    python3 "$LINK_SCRIPT" "$SOURCE_DIR" || true
+    npx -y tsx "$LINK_SCRIPT" "$SOURCE_DIR" || true
     exit 1
   fi
 else

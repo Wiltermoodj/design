@@ -25,8 +25,8 @@ For local development or offline validation, run from the cloned `design` reposi
 ## Validate
 
 ```bash
-node --experimental-strip-types scripts/ci/validate-frontmatter.ts .
-node --experimental-strip-types scripts/ci/validate-links.ts .
+npx -y tsx scripts/ci/validate-frontmatter.ts .
+npx -y tsx scripts/ci/validate-links.ts .
 ```
 
 ## Quick Preview
