@@ -2,7 +2,7 @@
 import sys
 from pathlib import Path
 
-def validate_frontmatter(root: Path, exclude_prefixes=('.kanban',)):
+def validate_frontmatter(root: Path, exclude_prefixes=('.kanban', 'node_modules', '.git')):
     files = [
         p for p in root.rglob('*.md')
         if not any(str(p.relative_to(root)).startswith(pre) for pre in exclude_prefixes)
