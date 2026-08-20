@@ -1,7 +1,7 @@
 ---
 title: "Human-in-the-Loop AI Enrichment"
 type: "adr"
-description: "Automated background AI data enhancements (scraping directories or sites) can hallucinate or fetch out-of-date information, which would corrupt author..."
+description: "Human-in-the-Loop validation gating policy requiring manual user verification before background AI enrichments are applied to authoritative records."
 status: "active"
 last_updated: "2026-07-18T17:50:00Z"
 ---

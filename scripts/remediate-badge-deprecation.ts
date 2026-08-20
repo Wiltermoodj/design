@@ -1,16 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-const COMPONENTS_DIR = path.resolve(process.cwd(), 'src/components');
+const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
 
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  if (!fs.existsSync(dirPath)) return arrayOfFiles;
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file);
     if (fs.statSync(fullPath).isDirectory()) {
-      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
-    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
+      if (file !== 'node_modules' && file !== '.next' && file !== 'dist' && file !== '.git') {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+      }
+    } else if (file.endsWith('.tsx') || file.endsWith('.ts') || file.endsWith('.jsx') || file.endsWith('.js')) {
       arrayOfFiles.push(fullPath);
     }
   });
@@ -66,7 +69,7 @@ function remediateBadgeInFile(filePath: string) {
 }
 
 function runBadgeRemediation() {
-  const files = getAllFiles(COMPONENTS_DIR);
+  const files = getAllFiles(TARGET_DIR);
   let count = 0;
   files.forEach((filePath) => {
     if (remediateBadgeInFile(filePath)) {
@@ -74,7 +77,7 @@ function runBadgeRemediation() {
       console.log(`Remediated Badge deprecation in: ${path.relative(process.cwd(), filePath)}`);
     }
   });
-  console.log(`\nCompleted Badge remediation across ${count} files.`);
+  console.log(`\nCompleted Badge remediation across ${count} files in ${TARGET_DIR}.`);
 }
 
 runBadgeRemediation();

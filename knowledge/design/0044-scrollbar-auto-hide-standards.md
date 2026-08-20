@@ -42,5 +42,5 @@ A system-wide standard is required to mandate overlay scrollbars that are visibl
 - **Hover-Only Triggers Banned:** Scrollbars MUST NOT appear statically on hover alone unless active scroll motion occurs.
 
 ## Compliance & Enforcement
-- Enforced via `.agents/skills/design-system/SKILL.md` checklist.
+- Enforced via [`.agents/skills/design-guidelines/SKILL.md`](../../.agents/skills/design-guidelines/SKILL.md) checklist.
 - All new scrollable containers must use `<ScrollArea />` with `type="scroll"` + `scrollHideDelay={300}` or apply `.scrollbar-auto-hide`.

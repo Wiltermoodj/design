@@ -1,22 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 
+const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
+
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  if (!fs.existsSync(dirPath)) return arrayOfFiles;
   const files = fs.readdirSync(dirPath);
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file);
     if (fs.statSync(fullPath).isDirectory()) {
-      if (file !== 'node_modules' && file !== '.next') {
+      if (file !== 'node_modules' && file !== '.next' && file !== 'dist' && file !== '.git') {
         arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
       }
-    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
+    } else if (file.endsWith('.tsx') || file.endsWith('.ts') || file.endsWith('.jsx') || file.endsWith('.js')) {
       arrayOfFiles.push(fullPath);
     }
   });
   return arrayOfFiles;
 }
 
-const files = getAllFiles(path.resolve(process.cwd(), 'src'));
+const files = getAllFiles(TARGET_DIR);
 let fixedFiles = 0;
 
 files.forEach((file) => {

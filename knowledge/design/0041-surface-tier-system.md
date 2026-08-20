@@ -1,7 +1,7 @@
 ---
 title: "0041 - Surface Tier System"
 type: "adr"
-description: "Accepted"
+description: "Elevation and surface tier hierarchy standards, 5-tier shadow tokens, ContainerPanel primitives, and dark mode ring supplements."
 status: "active"
 last_updated: "2026-08-07T23:19:00Z"
 ---

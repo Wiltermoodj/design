@@ -1,7 +1,7 @@
 ---
 title: "Optimistic UI Merging for Disconnected States"
 type: "adr"
-description: "Waiting for connection triggers or showing blocking overlays during offline/slow network operations leads to high perceived latency and poor user expe..."
+description: "Client-side query hook pattern for merging server documents with uncommitted local drafts during offline and slow network states."
 status: "active"
 last_updated: "2026-07-18T17:50:00Z"
 ---

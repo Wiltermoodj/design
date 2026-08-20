@@ -13,27 +13,37 @@ A codebase-agnostic skill for applying design guidelines across any UI project.
 - Source: https://github.com/Wiltermoodj/design
 - Format: Open Knowledge Format markdown
 
-## Install
+## Install into a Repository
+
+To install the skill, `RULES.md` routing matrix, and compliance scripts directly into your project:
 
 ```bash
-git clone https://github.com/Wiltermoodj/design.git /tmp/design && cd /tmp/design
-bash scripts/install-design-skill.sh
+# Run from within your target project root:
+curl -fsSL https://raw.githubusercontent.com/Wiltermoodj/design/main/scripts/install-design-skill.sh | bash
+
+# Or install to a specific directory path:
+bash scripts/install-design-skill.sh /path/to/target-repo
 ```
 
-For local development or offline validation, run from the cloned `design` repository root directly.
+### What Gets Installed
+- **`.agents/skills/design-guidelines/`**: `SKILL.md` and `REFERENCE.md` defining all design standards, checklists, and token scales.
+- **`RULES.md`**: Lightweight Open Knowledge Format context map and decision matrix for AI coding agents.
+- **`scripts/design/`**: Automated compliance audit (`audit-design-system-compliance.ts`) and remediation scripts.
 
 ## Validate
 
 ```bash
 python scripts/ci/validate_frontmatter.py .
 python scripts/ci/validate_links.py .
+node scripts/verify-design-adrs.mjs
+bash scripts/install-design-skill.sh --check
 ```
 
 ## Quick Preview
 
 - Layout: F-pattern, sidebar spec, z-index scale
-- Spacing: defined token scale only
-- Typography: defined scale and weights
+- Spacing: defined token scale only (`space-1`→`space-12`)
+- Typography: defined scale and weights; max 24px application UI cap
 - Color: semantic tokens in components; zero semantic alert color at rest
 - Buttons: max 1 primary per surface; correct variant for risk level
 - Badges/dots/pills: fully banned; use sub-label stacking or margin wash
@@ -44,23 +54,19 @@ python scripts/ci/validate_links.py .
 
 ## Upgrade
 
-```bash
-bash scripts/install-design-skill.sh
-```
+Re-run the installer from inside your project:
 
-Re-run the install script from any checkout of this repo to refresh the skill from upstream.
+```bash
+bash scripts/install-design-skill.sh .
+```
 
 ## Uninstall
 
-Remove the installed skill directory:
+Remove the installed files from your repository:
 
 ```bash
-rm -rf "${HERMES_SKILLS_DIR:-$HOME/.hermes/skills/design-guidelines}"
+rm -rf .agents/skills/design-guidelines scripts/design RULES.md
 ```
-
-## Fallback behavior
-
-The install script prefers a local source tree when run from inside a cloned copy of this repo; otherwise it falls back to cloning upstream into a temporary directory. If the expected bundled skill path is missing upstream, the script logs a skip message instead of failing.
 
 ## License
 

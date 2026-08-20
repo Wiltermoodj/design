@@ -1,0 +1,30 @@
+{
+  "name": "@wiltermood/design-guidelines",
+  "version": "1.0.0",
+  "description": "Codebase-agnostic UI/UX design guidelines, token scales, and automated compliance tools for AI coding agents.",
+  "main": "RULES.md",
+  "scripts": {
+    "test": "python3 scripts/ci/validate_frontmatter.py . && python3 scripts/ci/validate_links.py . && node scripts/verify-design-adrs.mjs && bash scripts/install-design-skill.sh --check",
+    "audit": "npx tsx scripts/audit-design-system-compliance.ts",
+    "remediate": "npx tsx scripts/remediate-all.ts",
+    "remediate:badges": "npx tsx scripts/remediate-badge-deprecation.ts",
+    "remediate:colors": "npx tsx scripts/remediate-static-colors.ts",
+    "remediate:a11y": "npx tsx scripts/remediate-deterministic-fallbacks-and-a11y.ts",
+    "remediate:residual": "npx tsx scripts/remediate-design-violations.ts"
+  },
+  "keywords": [
+    "design-system",
+    "ui-ux",
+    "ai-agent",
+    "antigravity",
+    "claude-code",
+    "accessibility",
+    "design-tokens"
+  ],
+  "author": "Wiltermood",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wiltermoodj/design.git"
+  }
+}

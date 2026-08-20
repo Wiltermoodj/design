@@ -18,9 +18,22 @@ def validate_frontmatter(root: Path, exclude_prefixes=('.kanban',)):
             failures.append((str(path), 'unclosed frontmatter'))
             continue
         fm = text[3:end]
+        fm_lines = fm.strip().split('\n')
+        fm_keys = {}
+        curr_key = None
+        for line in fm_lines:
+            if ':' in line and not line.startswith(' ') and not line.startswith('\t'):
+                k, v = line.split(':', 1)
+                curr_key = k.strip()
+                fm_keys[curr_key] = v.strip()
+            elif curr_key:
+                fm_keys[curr_key] += ' ' + line.strip()
+
         for key in ['title', 'type', 'status', 'description']:
-            if f'{key}:' not in fm:
+            if key not in fm_keys:
                 failures.append((str(path), f'missing {key}'))
+            elif not fm_keys[key] or fm_keys[key] in ('>', '|', "''", '""'):
+                failures.append((str(path), f'empty {key} value'))
     if failures:
         print('FRONTMATTER_FAILURES')
         for path, reason in failures:

@@ -20,7 +20,7 @@ description: >
 
 # Design Guidelines Skill
 
-Read `REFERENCE.md` for full token tables, decision trees, and ADR cross-reference.
+> **Agent Quick Routing:** Consult [`RULES.md`](../../../RULES.md) for the fast component routing matrix, token lookup, and automation script playbook. Read [`REFERENCE.md`](REFERENCE.md) for full token tables, decision trees, and ADR cross-references.
 
 ## Quick Checklist (run before every UI commit)
 

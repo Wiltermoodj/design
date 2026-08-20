@@ -242,15 +242,13 @@ function auditFile(filePath: string): Violation[] {
     const isTransientOrAlertComponent = (
       isModalOrDialog ||
       lineText.includes('animate-ping') ||
-      relativePath.includes('alert') ||
-      relativePath.includes('notification-bell') ||
-      relativePath.includes('offline') ||
-      relativePath.includes('mileage') ||
-      relativePath.includes('performance-widget') ||
-      relativePath.includes('sync-center-drawer') ||
-      relativePath.includes('resolution-card') ||
-      relativePath.includes('utils.ts') ||
-      relativePath.includes('EventContent.tsx')
+      relativePath.toLowerCase().includes('alert') ||
+      relativePath.toLowerCase().includes('notification') ||
+      relativePath.toLowerCase().includes('toast') ||
+      relativePath.toLowerCase().includes('drawer') ||
+      relativePath.toLowerCase().includes('modal') ||
+      relativePath.toLowerCase().includes('popover') ||
+      relativePath.toLowerCase().includes('utils')
     );
     if (hasSemanticColorAtRest && !isTransientOrAlertComponent) {
       violations.push({

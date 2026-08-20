@@ -3,7 +3,7 @@ import path from 'path';
 
 const WORKSPACE_ROOT = process.cwd();
 const DESIGN_DIR = path.join(WORKSPACE_ROOT, 'knowledge', 'design');
-const SKILL_MD = path.join(WORKSPACE_ROOT, '.agents', 'skills', 'design-system', 'SKILL.md');
+const SKILL_MD = path.join(WORKSPACE_ROOT, '.agents', 'skills', 'design-guidelines', 'SKILL.md');
 const INDEX_MD = path.join(DESIGN_DIR, 'index.md');
 
 let errors = 0;
@@ -28,6 +28,20 @@ if (!fs.existsSync(DESIGN_DIR)) {
 const adrFiles = fs.readdirSync(DESIGN_DIR).filter(f => f.endsWith('.md') && f !== 'index.md');
 logSuccess(`Found ${adrFiles.length} design ADR files.`);
 
+// 1b. Check for duplicate ADR number prefixes
+const seenNumbers = new Map();
+adrFiles.forEach(file => {
+  const match = file.match(/^(00\d{2})/);
+  if (match) {
+    const num = match[1];
+    if (seenNumbers.has(num)) {
+      logError(`Duplicate ADR number ${num}: found in both ${seenNumbers.get(num)} and ${file}`);
+    } else {
+      seenNumbers.set(num, file);
+    }
+  }
+});
+
 // 2. Validate Frontmatter Status
 adrFiles.forEach(file => {
   const filePath = path.join(DESIGN_DIR, file);
@@ -44,7 +58,6 @@ if (fs.existsSync(SKILL_MD)) {
   const citedAdrs = new Set([...adrMatches].map(m => m[1]));
 
   citedAdrs.forEach(adrNum => {
-    if (adrNum === '0015') return; // ADR 0015 lives in knowledge/architecture/adr/
     const found = adrFiles.some(f => f.startsWith(adrNum));
     if (!found) {
       logError(`SKILL.md cites ADR ${adrNum}, but no matching file exists in knowledge/design/.`);
@@ -62,7 +75,6 @@ if (fs.existsSync(INDEX_MD)) {
   const indexAdrs = new Set([...indexMatches].map(m => m[1]));
 
   indexAdrs.forEach(adrNum => {
-    if (adrNum === '0015') return; // ADR 0015 lives in knowledge/architecture/adr/
     const found = adrFiles.some(f => f.startsWith(adrNum));
     if (!found) {
       logError(`index.md references ADR ${adrNum}, but no matching file exists in knowledge/design/.`);
