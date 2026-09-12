@@ -1,36 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 
-async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promise<string[]> {
-  try {
-    const files = await fs.promises.readdir(dirPath);
-    const promises = files.map(async (file) => {
-      const fullPath = path.join(dirPath, file);
-      try {
-        const stat = await fs.promises.stat(fullPath);
-        if (stat.isDirectory()) {
-          if (file !== 'node_modules' && file !== '.next') {
-            await getAllFiles(fullPath, arrayOfFiles);
-          }
-        } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-          arrayOfFiles.push(fullPath);
-        }
-      } catch (e) {
-        // ignore
+const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
+
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  if (!fs.existsSync(dirPath)) return arrayOfFiles;
+  const files = fs.readdirSync(dirPath);
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      if (file !== 'node_modules' && file !== '.next' && file !== 'dist' && file !== '.git') {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
       }
-    });
-    await Promise.all(promises);
-  } catch(e) {
-    // ignore
-  }
+    } else if (file.endsWith('.tsx') || file.endsWith('.ts') || file.endsWith('.jsx') || file.endsWith('.js')) {
+      arrayOfFiles.push(fullPath);
+    }
+  });
   return arrayOfFiles;
 }
 
-const files = await getAllFiles(path.resolve(process.cwd(), 'src'));
+const files = getAllFiles(TARGET_DIR);
 let fixedFiles = 0;
 
-await Promise.all(files.map(async (file) => {
-  let content = await fs.promises.readFile(file, 'utf8');
+files.forEach((file) => {
+  let content = fs.readFileSync(file, 'utf8');
   const original = content;
 
   // Fix duplicate aria-label attributes inside single JSX tags
@@ -43,9 +36,9 @@ await Promise.all(files.map(async (file) => {
   });
 
   if (content !== original) {
-    await fs.promises.writeFile(file, content, 'utf8');
+    fs.writeFileSync(file, content, 'utf8');
     fixedFiles++;
   }
-}));
+});
 
 console.log(`Cleaned up duplicate aria-labels across ${fixedFiles} files.`);

@@ -4,3 +4,16 @@ __pycache__/
 .kanban/
 .DS_Store
 Thumbs.db
+
+# Dependencies & Build
+node_modules/
+dist/
+.tmp/
+
+# Local Audit Artifacts
+scratch/
+*.log
+
+# Environment
+.env*
+

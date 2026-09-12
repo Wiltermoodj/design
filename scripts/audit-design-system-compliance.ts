@@ -13,42 +13,27 @@ interface Violation {
 
 const TARGET_DIR = path.resolve(process.cwd(), process.argv[2] || 'src');
 
-async function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): Promise<string[]> {
-  try {
-    if (!fs.existsSync(dirPath)) {
-      return arrayOfFiles;
-    }
-    const files = await fs.promises.readdir(dirPath);
-    for (const file of files) {
-      if (file === 'node_modules' || file === '.next' || file === '.git' || file === 'dist' || file === 'build') {
-        continue;
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  if (!fs.existsSync(dirPath)) return arrayOfFiles;
+  const files = fs.readdirSync(dirPath);
+
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      if (file !== 'node_modules' && file !== '.next') {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
       }
-      const fullPath = path.join(dirPath, file);
-      try {
-        const stat = await fs.promises.stat(fullPath);
-        if (stat.isDirectory()) {
-          await getAllFiles(fullPath, arrayOfFiles);
-        } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-          arrayOfFiles.push(fullPath);
-        }
-      } catch (e) {
-        // ignore unreadable file/stat error safely
-      }
+    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
+      arrayOfFiles.push(fullPath);
     }
-  } catch(e) {
-    // ignore
-  }
+  });
+
   return arrayOfFiles;
 }
 
-async function auditFile(filePath: string): Promise<Violation[]> {
+function auditFile(filePath: string): Violation[] {
   const relativePath = path.relative(process.cwd(), filePath);
-  let content = '';
-  try {
-    content = await fs.promises.readFile(filePath, 'utf8');
-  } catch (e) {
-    return [];
-  }
+  const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
   const violations: Violation[] = [];
 
@@ -66,7 +51,7 @@ async function auditFile(filePath: string): Promise<Violation[]> {
         adr: 'ADR 0035',
         severity: 'ERROR',
         snippet: lineText.trim(),
-        description: 'Usage of deprecated Badge component. Replace with Sub-label Stacking or Margin Wash Variant.'
+        description: 'Usage of deprecated Badge component. Replace with Concept C sub-label stacking or Concept A margin wash.'
       });
     }
 
@@ -79,7 +64,7 @@ async function auditFile(filePath: string): Promise<Violation[]> {
         adr: 'ADR 0035',
         severity: 'WARNING',
         snippet: lineText.trim(),
-        description: 'Colored status dots are deprecated. Use Sub-label Stacking.'
+        description: 'Colored status dots are deprecated. Use Concept C sub-label stacking.'
       });
     }
 
@@ -257,15 +242,13 @@ async function auditFile(filePath: string): Promise<Violation[]> {
     const isTransientOrAlertComponent = (
       isModalOrDialog ||
       lineText.includes('animate-ping') ||
-      relativePath.includes('alert') ||
-      relativePath.includes('notification-bell') ||
-      relativePath.includes('offline') ||
-      relativePath.includes('mileage') ||
-      relativePath.includes('performance-widget') ||
-      relativePath.includes('sync-center-drawer') ||
-      relativePath.includes('resolution-card') ||
-      relativePath.includes('utils.ts') ||
-      relativePath.includes('EventContent.tsx')
+      relativePath.toLowerCase().includes('alert') ||
+      relativePath.toLowerCase().includes('notification') ||
+      relativePath.toLowerCase().includes('toast') ||
+      relativePath.toLowerCase().includes('drawer') ||
+      relativePath.toLowerCase().includes('modal') ||
+      relativePath.toLowerCase().includes('popover') ||
+      relativePath.toLowerCase().includes('utils')
     );
     if (hasSemanticColorAtRest && !isTransientOrAlertComponent) {
       violations.push({
@@ -322,8 +305,8 @@ async function auditFile(filePath: string): Promise<Violation[]> {
   return violations;
 }
 
-async function runAudit() {
-  const files = await getAllFiles(TARGET_DIR);
+function runAudit() {
+  const files = getAllFiles(TARGET_DIR);
   const relTargetDir = path.relative(process.cwd(), TARGET_DIR);
   console.log(`Auditing ${files.length} files in ${relTargetDir}...\n`);
 
@@ -335,13 +318,13 @@ async function runAudit() {
   const allViolations: Violation[] = [];
   const filesWithViolations = new Set<string>();
 
-  await Promise.all(files.map(async (file) => {
-      const fileViolations = await auditFile(file);
-      if (fileViolations.length > 0) {
-        filesWithViolations.add(file);
-        allViolations.push(...fileViolations);
-      }
-    }));
+  files.forEach((file) => {
+    const fileViolations = auditFile(file);
+    if (fileViolations.length > 0) {
+      filesWithViolations.add(file);
+      allViolations.push(...fileViolations);
+    }
+  });
 
   // Group by directory path relative to src/
   const byDir: Record<string, Violation[]> = {};
@@ -373,7 +356,7 @@ async function runAudit() {
     violations: allViolations
   };
 
-  await fs.promises.writeFile('scratch/design-audit-results.json', JSON.stringify(report, null, 2));
+  fs.writeFileSync('scratch/design-audit-results.json', JSON.stringify(report, null, 2));
 
   // Generate Markdown summary
   let md = `# Design System Compliance Audit Report\n\n`;
@@ -406,8 +389,8 @@ async function runAudit() {
     md += `\n*... and ${allViolations.length - 100} more violations logged in scratch/design-audit-results.json*\n`;
   }
 
-  await fs.promises.writeFile('scratch/design-audit-report.md', md);
+  fs.writeFileSync('scratch/design-audit-report.md', md);
   console.log(`Audit complete! Summary written to scratch/design-audit-report.md`);
 }
 
-runAudit().catch(console.error);
+runAudit();

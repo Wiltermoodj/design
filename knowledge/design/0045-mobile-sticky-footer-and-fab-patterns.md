@@ -1,12 +1,12 @@
 ---
-description: 
-title: "ADR 0041: Mobile Sticky Footer and FAB Architecture Standards"
+title: "ADR 0045: Mobile Sticky Footer and FAB Architecture Standards"
 type: "adr"
 status: "active"
+description: "App-wide mobile action paradigm standards, 1-3 slot sticky footer layout contracts, and safe-area scroll buffers."
 date: "2026-08-10"
 ---
 
-# ADR 0041: Mobile Sticky Footer and FAB Architecture Standards
+# ADR 0045: Mobile Sticky Footer and FAB Architecture Standards
 
 ## Context
 

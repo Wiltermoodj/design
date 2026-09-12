@@ -335,7 +335,7 @@ Use an em-dash. Never use N/A, null, -, or blank.
 | Toolbar | ADR 0039 |
 | Split Pane | ADR 0040 |
 | Surface Tier | ADR 0041 |
-| Mobile Bottom Actions | ADR 0041 mobile |
+| Mobile Bottom Actions | ADR 0045 |
 | Wizards | ADR 0042 |
 | Button Text vs Icon | ADR 0043 |
 | Scrollbar Auto-Hide | ADR 0044 |
