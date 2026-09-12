@@ -1,4 +1,5 @@
 ---
+name: design
 title: design-guidelines
 type: skill
 status: active

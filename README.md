@@ -15,12 +15,30 @@ A codebase-agnostic skill for applying design guidelines across any UI project.
 
 ## Install
 
+Run the following command from the root of the project you want to install the skill into:
+
 ```bash
-git clone https://github.com/Wiltermoodj/design.git /tmp/design && cd /tmp/design
-bash scripts/install-design-skill.sh
+curl -fsSL https://raw.githubusercontent.com/Wiltermoodj/design/main/scripts/install-design-skill.sh | bash
 ```
 
-For local development or offline validation, run from the cloned `design` repository root directly.
+Alternatively, if you have cloned the `design` repository locally:
+
+```bash
+bash /path/to/design/scripts/install-design-skill.sh .
+```
+
+### Installed Project Structure
+
+The installer places the guidelines and agent skill directly into your project:
+
+- **Project Root**:
+  - `RULES.md` — Agent design system rules and routing matrix
+- **Agent Customizations (`.agents/`)**:
+  - `.agents/rules/design-rules.md` — Automatic directory rule discovery
+  - `.agents/skills/design/SKILL.md` — Core design skill instructions and checklist
+  - `.agents/skills/design/REFERENCE.md` — Token lookup tables and specifications
+  - `.agents/skills/design/knowledge/` — Design ADR corpus
+  - `.agents/skills/design/scripts/` — Automated compliance and remediation scripts
 
 ## Validate
 
@@ -44,23 +62,19 @@ npx -y tsx scripts/ci/validate-links.ts .
 
 ## Upgrade
 
-```bash
-bash scripts/install-design-skill.sh
-```
+Re-run the installation command from your project root at any time to refresh the skill and rules from upstream:
 
-Re-run the install script from any checkout of this repo to refresh the skill from upstream.
+```bash
+curl -fsSL https://raw.githubusercontent.com/Wiltermoodj/design/main/scripts/install-design-skill.sh | bash
+```
 
 ## Uninstall
 
-Remove the installed skill directory:
+To remove the installed design skill and rules from your project, run from your project root:
 
 ```bash
-rm -rf "${HERMES_SKILLS_DIR:-$HOME/.hermes/skills/design-guidelines}"
+rm -rf .agents/skills/design .agents/rules/design-rules.md RULES.md
 ```
-
-## Fallback behavior
-
-The install script prefers a local source tree when run from inside a cloned copy of this repo; otherwise it falls back to cloning upstream into a temporary directory. If the expected bundled skill path is missing upstream, the script logs a skip message instead of failing.
 
 ## License
 
